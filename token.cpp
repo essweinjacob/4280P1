@@ -1,0 +1,111 @@
+#include "token.h"
+
+void Language::initOpMap(){
+    opMap.insert(make_pair("=>", "greaterThanEqualTK"));
+    opMap.insert(make_pair("=<", "lessThanEqualTK"));
+    opMap.insert(make_pair("==", "equalEqualTK"));
+    opMap.insert(make_pair("=", "equalTK"));
+    opMap.insert(make_pair("<", "lessThanTK"));
+    opMap.insert(make_pair(">", "moreThanTK"));
+    opMap.insert(make_pair(":", "colonTK"));
+    opMap.insert(make_pair("+", "plusTK"));
+    opMap.insert(make_pair("-", "minusTK"));
+    opMap.insert(make_pair("*", "multiplyTK"));
+    opMap.insert(make_pair("%", "modTK"));
+    opMap.insert(make_pair(".", "periodTK"));
+    opMap.insert(make_pair(",", "commaTK"));
+    opMap.insert(make_pair(";", "semiColonTK"));
+    opMap.insert(make_pair("(", "leftParTK"));
+    opMap.insert(make_pair(")", "rightParTK"));
+    opMap.insert(make_pair("{", "leftCurlTK"));
+    opMap.insert(make_pair("}", "rightCurlTK"));
+    opMap.insert(make_pair("[", "leftBracketTK"));
+    opMap.insert(make_pair("]", "rightBracketTK"));
+}
+
+void Language::initKeywordMap(){
+    keywordMap.insert(make_pair("label", "labelTK"));
+    keywordMap.insert(make_pair("goto", "gotoTK"));
+    keywordMap.insert(make_pair("loop", "loopTK"));
+    keywordMap.insert(make_pair("void", "voidTK"));
+    keywordMap.insert(make_pair("declare", "declareTK"));
+    keywordMap.insert(make_pair("return", "returnTK"));
+    keywordMap.insert(make_pair("in", "inTK"));
+    keywordMap.insert(make_pair("out", "outTK"));
+    keywordMap.insert(make_pair("program", "programTK"));
+    keywordMap.insert(make_pair("iffy", "iffyTK"));
+    keywordMap.insert(make_pair("then", "thenTK"));
+    keywordMap.insert(make_pair("assign", "assignTK"));
+    keywordMap.insert(make_pair("data", "dataTK"));
+}
+
+void Language::printTK(Token tk){
+    cout << "Line #" << tk.lineNum << ": " << tkNames[tk.id] << " | " << tk.val << endl;
+}
+
+int Language::isOp(char ch){
+    // Cycle through the operators and see if given char is one
+    for(unsigned int i = 0; i < sOperators.size(); i++){
+        // If is one, return 1
+        if(ch == sOperators[i]){
+            return 1;
+        }
+    }
+    
+    // If no operator is found, return -1
+    return -1;
+}
+
+int Language::isNsOp(string str){
+    // Cycle through non single char operators and compare them to current string
+    for(unsigned int i = 0; i < nsOperators.size(); i++){
+        // If strings match, return
+        if(str.compare(nsOperators[i]) == 0){
+            return 1;
+        }
+    }
+
+    // If no match is found, return -1
+    return -1;
+}
+
+int Language::getOp(Token &tk){
+    
+    // Search through the single operators
+    for(unsigned int i = 0; i < sOperators.size(); i++){
+        // Get that operator from the vector
+        string opToCompare(1, sOperators[i]);
+        // Compare the value gotten to current i operator, if found replace token value with equivalent value found in operator map and return its position
+        if(tk.val.compare(opToCompare) == 0){
+            tk.val = opMap[tk.val];
+            return i;
+        }
+    }
+
+    // Search through the non single operators
+    for(unsigned int i = 0; i < nsOperators.size(); i++){
+        // Compare the value gotten to current i operator, if found replace token value with equivalent value found in operator map and return its position
+        if(tk.val.compare(nsOperators[i]) == 0){
+            tk.val = opMap[tk.val];
+            return i;
+        }
+    }
+
+    // If no matches found return -1 for error
+    return -1;
+}
+
+int Language::getKeyword(Token &tk){
+    // Search through keywords
+    for(unsigned int i = 0; i < keywords.size(); i++){
+        // Compare if token value matches a specific keyword
+        if(tk.val.compare(keywords[i]) == 0){
+            // If it does change token value to keyword in map and return its position
+            tk.val = keywordMap[tk.val];
+            return i;
+        }
+    }
+
+    // If no keyword is got, return -1 for error
+    return -1;
+}
