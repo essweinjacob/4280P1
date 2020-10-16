@@ -1,6 +1,6 @@
 #include "scanner.h"
 
-// Operator map and keyword map
+// Initializes Operator map and keyword map
 Scanner::Scanner(){
     initOpMap();
     initKeywordMap();
@@ -53,7 +53,6 @@ char Scanner::checkCom(int curLine, char ch){
     if(ch == COM_DELIM){
         isComment = !isComment;
 
-        // Right to file
         if(isComment){
             ostringstream temp;
             temp << curLine << ":" << currentScannerPtr;
@@ -78,6 +77,7 @@ void Scanner::isComMode(){
     }
 }
 
+// This is the 'main' working function of the scanner
 int Scanner::scan(int curLine, string &input, Token &tk){
     tk.lineNum = curLine;   // Set current line number to current token line number
 

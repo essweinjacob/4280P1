@@ -6,6 +6,8 @@
 #include "scanner.h"
 using namespace std;
 
+
+// This function will run the scanner
 int runScanner(string fileName){
     Scanner scanner;    // Create scanner object
 
@@ -22,6 +24,7 @@ int runScanner(string fileName){
             while(scanner.scan(curLine, line, tk) == 0){
                 scanner.printTK(tk);
             }
+            // For each line given, increase the line we are currently on
             curLine++;
         }
         

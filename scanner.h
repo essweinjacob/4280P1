@@ -1,11 +1,11 @@
 #ifndef SCANNER_H
 #define SCANNER_H
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <cctype>
-#include <cstdlib>
-#include <sstream>
+#include <iostream>     // cin & cout
+#include <string>       // string > char arrays
+#include <cstring>      // cool c string things
+#include <cctype>       // isalpha/isdigit/etc
+#include <cstdlib>      
+#include <sstream>      // String stream classes
 #include "token.h"
 #include<stdio.h>
 using namespace std;
@@ -30,6 +30,7 @@ class Scanner: public Language{
             STATE_EOF = 1005    // End of File Final State
         };
 
+        // FSA Table
         const int TABLE_FSA[4][6] = {
             {STATE_2, STATE_3, STATE_0, STATE_EOF, STATE_1, ERROR_UNK}, {STATE_OP, STATE_OP, STATE_OP, STATE_OP, STATE_OP, STATE_OP},
             {STATE_2, STATE_2, STATE_ID, STATE_ID, STATE_ID, ERROR_UNK}, {ERROR_INT, STATE_3, STATE_INT, STATE_INT, STATE_INT, ERROR_UNK}

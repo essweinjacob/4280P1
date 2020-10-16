@@ -1,12 +1,14 @@
-#include <iostream>
-#include <string>
-#include <fstream>
+#include <iostream>         // cin & cout
+#include <string>           // String type for convience
+#include <fstream>          // Operation on files
 #include "runScanner.h"
 using namespace std;
 
 int main(int argc, char *argv[]){
+    // Name of file we will be working with
     string fileName;
 
+    // What do we do? Based on amount of command line arguments given
     switch(argc){
         // We will read from keyboard if no file given
         case 1:{
@@ -18,6 +20,7 @@ int main(int argc, char *argv[]){
             fileName = "tempFile.dat";
             tempFile.open(fileName.c_str());
 
+            // User will input lines until user enters ctrl - d
             cout << "Enter token(s) then return end of file (ctl-d) when finished: ";
             while(getline(cin, keyboardInput)){
                 tempFile << keyboardInput << " ";

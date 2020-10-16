@@ -1,5 +1,7 @@
 #include "token.h"
 
+
+// This function creates pairs for Operator Map
 void Language::initOpMap(){
     opMap.insert(make_pair("=>", "greaterThanEqualTK"));
     opMap.insert(make_pair("=<", "lessThanEqualTK"));
@@ -11,6 +13,7 @@ void Language::initOpMap(){
     opMap.insert(make_pair("+", "plusTK"));
     opMap.insert(make_pair("-", "minusTK"));
     opMap.insert(make_pair("*", "multiplyTK"));
+    opMap.insert(make_pair("/", "divideTK"));
     opMap.insert(make_pair("%", "modTK"));
     opMap.insert(make_pair(".", "periodTK"));
     opMap.insert(make_pair(",", "commaTK"));
@@ -23,6 +26,7 @@ void Language::initOpMap(){
     opMap.insert(make_pair("]", "rightBracketTK"));
 }
 
+// This function creates pairs for the keyword map
 void Language::initKeywordMap(){
     keywordMap.insert(make_pair("label", "labelTK"));
     keywordMap.insert(make_pair("goto", "gotoTK"));
@@ -39,10 +43,12 @@ void Language::initKeywordMap(){
     keywordMap.insert(make_pair("data", "dataTK"));
 }
 
+// This function prints a token
 void Language::printTK(Token tk){
     cout << "Line #" << tk.lineNum << ": " << tkNames[tk.id] << " | " << tk.val << endl;
 }
 
+// This function searches for an operator
 int Language::isOp(char ch){
     // Cycle through the operators and see if given char is one
     for(unsigned int i = 0; i < sOperators.size(); i++){
@@ -56,6 +62,7 @@ int Language::isOp(char ch){
     return -1;
 }
 
+// This function searches for an operator that is more then one character
 int Language::isNsOp(string str){
     // Cycle through non single char operators and compare them to current string
     for(unsigned int i = 0; i < nsOperators.size(); i++){
@@ -69,6 +76,7 @@ int Language::isNsOp(string str){
     return -1;
 }
 
+// This function searches for any operators
 int Language::getOp(Token &tk){
     
     // Search through the single operators
@@ -95,6 +103,7 @@ int Language::getOp(Token &tk){
     return -1;
 }
 
+// This function searches for keywords
 int Language::getKeyword(Token &tk){
     // Search through keywords
     for(unsigned int i = 0; i < keywords.size(); i++){
