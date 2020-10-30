@@ -45,7 +45,7 @@ void Language::initKeywordMap(){
 
 // This function prints a token
 void Language::printTK(Token tk){
-    cout << "Line #" << tk.lineNum << ": " << tkNames[tk.id] << " | " << tk.val << endl;
+    cout << "Line #" << tk.lineNum << ": " << tkNames[tk.id] << ": " << tk.val << endl;
 }
 
 // This function searches for an operator

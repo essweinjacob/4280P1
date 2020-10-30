@@ -34,7 +34,7 @@ int Scanner::getCat(char ch){
 
 // This function returns error messages
 void Scanner::getError(int curLine, int state, char ch){
-    cout << "ERROR found at line ("  << curLine << ":" << currentScannerPtr << ") -> {" << ch << "]: ";
+    cout << "ERROR found at line #"  << curLine << ":" << currentScannerPtr << " [" << ch << "]: ";
     // Is int error?
     if(state == ERROR_INT){
         cout << "integer tokens can only be integers/digits" << endl;
@@ -73,7 +73,7 @@ char Scanner::checkCom(int curLine, char ch){
 // This function will throw a warning message at the user if a comment tag isnt ever closed
 void Scanner::isComMode(){
     if(isComment){
-        cout << "WARNING at (" << lastComPos << ") -> comment tag isnt ever closed" << endl;
+        cout << "WARNING at " << lastComPos << ". Comment tag isnt ever closed" << endl;
     }
 }
 
@@ -109,13 +109,13 @@ int Scanner::scan(int curLine, string &input, Token &tk){
             getError(curLine, nextState, nextChar);
         }
         // Check if we are at final state
-        else if(nextState > STATE_F){
+        else if(nextState > FINAL_STATE){
             tk.val = readVal;
 
             // Determine what final state we are in
             switch(nextState){
                 // Identifier
-                case STATE_ID:
+                case STATE_ID_FIN:
                     // See if this is a keyword
                     if(getKeyword(tk) != -1){
                         tk.id = keywordTK;
@@ -129,13 +129,13 @@ int Scanner::scan(int curLine, string &input, Token &tk){
                     break;
                 
                 // Integer
-                case STATE_INT:
+                case STATE_INT_FIN:
                     tk.id = intTK;
                     tk.val.assign("intTK " + readVal);
                     break;
                 
                 // Operator
-                case STATE_OP:
+                case STATE_OP_FIN:
                     tk.id = opTK;
 
                     // See if is a nonsingle operator

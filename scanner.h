@@ -17,23 +17,25 @@ class Scanner: public Language{
         string lastComPos = "";     // Log when the last time we were in a comment
 
         enum{
-            ERROR_UNK = -2,     // Error Unkown State     
-            ERROR_INT = -1,     // Error Integer State
-            STATE_0 = 0,        // Initial State
-            STATE_1 = 1,        // Operator State
-            STATE_2 = 2,        // Identifier State
-            STATE_3 = 3,        // Integeter State
-            STATE_F = 1000,     // Final State
-            STATE_ID = 1001,    // Indetifier Final State
-            STATE_INT = 1003,   // Int final state
-            STATE_OP = 1004,    // Op Final State
-            STATE_EOF = 1005    // End of File Final State
+            ERROR_UNK = -2,         // Error Unkown State     
+            ERROR_INT = -1,         // Error Integer State
+            INIT_STATE = 0,         // Initial State
+            OP_STATE = 1,           // Operator State
+            ID_STATE = 2,           // Identifier State
+            INT_STATE = 3,          // Integeter State
+            FINAL_STATE = 1000,     // Final State
+            STATE_ID_FIN = 1001,    // Indetifier Final State
+            STATE_INT_FIN = 1003,   // Int final state
+            STATE_OP_FIN = 1004,    // Op Final State
+            STATE_EOF_FIN = 1005    // End of File Final State
         };
 
         // FSA Table
         const int TABLE_FSA[4][6] = {
-            {STATE_2, STATE_3, STATE_0, STATE_EOF, STATE_1, ERROR_UNK}, {STATE_OP, STATE_OP, STATE_OP, STATE_OP, STATE_OP, STATE_OP},
-            {STATE_2, STATE_2, STATE_ID, STATE_ID, STATE_ID, ERROR_UNK}, {ERROR_INT, STATE_3, STATE_INT, STATE_INT, STATE_INT, ERROR_UNK}
+            {ID_STATE, INT_STATE, INIT_STATE, STATE_EOF_FIN, OP_STATE, ERROR_UNK}, 
+            {STATE_OP_FIN, STATE_OP_FIN, STATE_OP_FIN, STATE_OP_FIN, STATE_OP_FIN, STATE_OP_FIN},
+            {ID_STATE, ID_STATE, STATE_ID_FIN, STATE_ID_FIN, STATE_ID_FIN, ERROR_UNK}, 
+            {ERROR_INT, INT_STATE, STATE_INT_FIN, STATE_INT_FIN, STATE_INT_FIN, ERROR_UNK}
         };
 
         // Delimiter for scanner
